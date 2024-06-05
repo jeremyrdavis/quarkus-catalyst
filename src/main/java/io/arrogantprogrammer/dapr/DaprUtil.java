@@ -1,5 +1,7 @@
 package io.arrogantprogrammer.dapr;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.arrogantprogrammer.DaprRESTClient;
 import io.arrogantprogrammer.Order;
 import io.dapr.client.DaprClient;
@@ -8,6 +10,7 @@ import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.json.JsonObject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import reactor.core.publisher.Mono;
@@ -22,6 +25,8 @@ public class DaprUtil {
 
     @RestClient
     DaprRESTClient daprRESTClient;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @ConfigProperty(name = "dapr.pubsub")
     private String PUBSUB_NAME;
@@ -46,8 +51,12 @@ public class DaprUtil {
     }
 
     public Uni<Void> publishEvent(String topic, Order order) {
-        daprClient.publishEvent(PUBSUB_NAME, "orders", order).block();
-        Log.debugf("Published event to %s: %s", PUBSUB_NAME, order);
+        try {
+            daprClient.publishEvent(PUBSUB_NAME, "orders", objectMapper.writeValueAsString(order)).block();
+            Log.debugf("Published event to %s: %s", PUBSUB_NAME, order);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 

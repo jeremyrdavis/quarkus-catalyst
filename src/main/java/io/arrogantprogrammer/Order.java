@@ -7,7 +7,7 @@ public class Order {
     protected Order() {
     }
 
-    protected int getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
