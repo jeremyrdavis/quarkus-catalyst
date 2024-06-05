@@ -4,6 +4,9 @@ public class Order {
 
     private int orderId;
 
+    Order() {
+    }
+
     int getOrderId() {
         return orderId;
     }
