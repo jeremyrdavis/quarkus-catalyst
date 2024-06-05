@@ -8,7 +8,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import kotlin.jvm.internal.SourceDebugExtension;
 
 @Path("/catalyst")
 public class CatalystResource {
@@ -21,6 +20,7 @@ public class CatalystResource {
     @Path("/pubsub/orders")
     @Consumes(MediaType.MEDIA_TYPE_WILDCARD)
     public Response publish(Order order) {
+        Log.infof("Publishing Order: " + order.getOrderId());
         return dapr.publishEvent("orders", order)
                     .onItem()
                     .transform(v -> {

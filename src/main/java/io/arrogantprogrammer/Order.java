@@ -4,14 +4,14 @@ public class Order {
 
     private int orderId;
 
-    Order() {
+    protected Order() {
     }
 
-    int getOrderId() {
+    protected int getOrderId() {
         return orderId;
     }
 
-    void setOrderId(int orderId) {
+    protected void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 }
