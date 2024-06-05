@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.arrogantprogrammer</groupId>
     <artifactId>quarkus-catalyst</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <compiler-plugin.version>3.12.1</compiler-plugin.version>
@@ -37,14 +37,17 @@
             <artifactId>dapr-sdk</artifactId>
             <version>${dapr.version}</version>
         </dependency>
-        <!-- Quarkus dependencies -->
         <!-- Mutiny <-> Reactor -->
         <dependency>
             <groupId>io.smallrye.reactive</groupId>
             <artifactId>mutiny-reactor</artifactId>
             <version>2.0.0</version>
         </dependency>
-
+        <!-- Quarkus dependencies -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-jackson</artifactId>
