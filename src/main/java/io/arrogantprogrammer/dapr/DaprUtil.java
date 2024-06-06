@@ -62,7 +62,7 @@ public class DaprUtil {
 
     public Uni<Order> placeOrder(Order order) {
         return Uni.createFrom().item(() -> {
-            Order result = daprRESTClient.invokeNewOrders(order);
+            Order result = daprRESTClient.invokeNewOrders(order).await().indefinitely();
             Log.infof("Order placed: %s", result);
             return result;
         });

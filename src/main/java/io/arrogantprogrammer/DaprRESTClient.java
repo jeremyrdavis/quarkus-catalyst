@@ -1,5 +1,6 @@
 package io.arrogantprogrammer;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -15,5 +16,5 @@ public interface DaprRESTClient {
     @Produces(MediaType.APPLICATION_JSON)
     @ClientHeaderParam(name = "dapr-api-token", value = "${darp.api.token}")
     @ClientHeaderParam(name = "dapr-app-id", value = "${dapr.app.id}")
-    public Order invokeNewOrders(Order order);
+    public Uni<Order> invokeNewOrders(Order order);
 }
