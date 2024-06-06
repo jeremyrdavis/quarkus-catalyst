@@ -21,13 +21,10 @@ public class CatalystResource {
     @Consumes(MediaType.MEDIA_TYPE_WILDCARD)
     public Response publish(Order order) {
         Log.infof("Publishing Order: " + order.getOrderId());
-        return dapr.publishEvent("orders", order)
-                    .onItem()
-                    .transform(v -> {
-                        Log.infof("Publish Successful. Order published: " + order.getOrderId());
-                        return Response.ok("SUCCESS").build();
-                    }).await().indefinitely();
-        }
+        dapr.publishEvent("orders", order).await();
+        Log.infof("Order published: " + order.getOrderId());
+        return Response.ok().entity("SUCCESS").build();
+    }
 
     // Subscribe to messages
     @POST
