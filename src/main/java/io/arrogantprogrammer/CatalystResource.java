@@ -21,7 +21,7 @@ public class CatalystResource {
     @Consumes(MediaType.MEDIA_TYPE_WILDCARD)
     public Response publish(Order order) {
         Log.infof("Publishing Order: " + order.getOrderId());
-        dapr.publishEvent("orders", order).subscribe();
+        dapr.publishEvent("orders", order);
         Log.info("returning response");
         return Response.ok().entity("SUCCESS").build();
     }
