@@ -3,6 +3,7 @@ package io.arrogantprogrammer;
 import io.arrogantprogrammer.dapr.DaprUtil;
 import io.dapr.client.domain.CloudEvent;
 import io.quarkus.logging.Log;
+import io.smallrye.common.annotation.Blocking;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -46,11 +47,10 @@ public class CatalystResource {
     @POST
     @Path("/invoke/orders")
     @Consumes(MediaType.MEDIA_TYPE_WILDCARD)
-    public Uni<Response> request(Order order) {
-        return dapr.placeOrder(order).onItem().transform(o -> {
-            Log.infof("Order placed: " + o.getOrderId());
-            return Response.ok(o).build();
-        });
+    public Response request(Order order) {
+        Log.infof("Invoking Order: " + order.getOrderId());
+        dapr.placeOrder(order);
+        return Response.ok().entity("SUCCESS").build();
     }
 
     // Service to be invoked

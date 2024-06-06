@@ -16,5 +16,5 @@ public interface DaprRESTClient {
     @Produces(MediaType.APPLICATION_JSON)
     @ClientHeaderParam(name = "dapr-api-token", value = "${darp.api.token}")
     @ClientHeaderParam(name = "dapr-app-id", value = "${dapr.app.id}")
-    public Uni<Order> invokeNewOrders(Order order);
+    public Uni<Void> invokeNewOrders(Order order);
 }
